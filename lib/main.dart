@@ -1,47 +1,60 @@
-import 'package:cart_bloc/catalog.dart';
+import 'package:cart_bloc/src/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'bloc/cart_bloc.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (BuildContext context) => CartBloc(),
+      child: MaterialApp(
+        title: 'Flutter Code Sample for material.Scaffold',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyLoginScreen(),
       ),
-      home: LoginScreen(),
     );
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  @override
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _count = 0;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Sample Code'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Catalog()));
-          },
-          child: Text('Login'),
+        child: Text('You have pressed the button $_count times.'),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 50.0,
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => setState(() {
+          _count++;
+        }),
+        tooltip: 'Increment Counter',
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
